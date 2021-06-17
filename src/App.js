@@ -6,6 +6,7 @@ import HomePage from "./pages/HomePage";
 import LogIn from "./pages/LogIn";
 import ProtectedPage from "./pages/ProtectedPage";
 import Signup from "./pages/Signup";
+import Profile from "./pages/Profile";
 import NormalRoute from "./routing-components/NormalRoute";
 import ProtectedRoute from "./routing-components/ProtectedRoute";
 import { getLoggedIn, logout } from "./services/auth";
@@ -77,6 +78,15 @@ export default function App() {
           path={PATHS.PROTECTEDPAGE}
           component={ProtectedPage}
           user={user}
+        />
+
+        {/* Profile Page */}
+        <ProtectedRoute
+          exact
+          path={PATHS.PROFILE_PAGE}
+          component={Profile}
+          user={user}
+          setUser={setUser}
         />
       </Switch>
     </div>
