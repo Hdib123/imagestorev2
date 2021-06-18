@@ -32,6 +32,16 @@ function Profile({ user, setUser }) {
 
         // setUser({ ...user, profilePic: res.data.picFromServer });
       })
+      .then(dataReturnedFromPreviousThen => {
+        console.log('iamgeshere: ', dataReturnedFromPreviousThen);
+    
+        //? Find all books in our DB
+        return Image.find({});
+    
+        // Could also pass a MongoDB query like the $gt
+        // The query below gets all books in which the pages number are bigger than 800
+        // return Book.find({pages: {$gt: 800}})
+      })
       .catch((err) => console.log(err.response));
   }
 
