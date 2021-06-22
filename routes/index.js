@@ -4,6 +4,7 @@ const User = require("../models/User.model");
 const upload = require("../middleware/cloudinary");
 const Image = require("../models/Image.model");
 const isLoggedIn = require("../middleware/isLoggedIn");
+const mongoose = require("mongoose");
 
 router.post(
   "/uploadPicture",
@@ -12,10 +13,14 @@ router.post(
   (req, res) => {
     const imageUrl = req.file.path;
     const id = req.user._id;
-    console.log();
+    const tag = req.body.tag;
+    const desc = req.body.description;
+    console.log(req);
     Image.create({
       userId: id,
       url: imageUrl,
+      tag: tag,
+      description: desc,
     })
       .then((picture) => {
         console.log("newly created picture: ", picture);
@@ -30,7 +35,7 @@ router.post(
 //TODO
 // get all images from a specific user!
 
-router.get(
+/* router.get(
   "/uploadPicture",
   isLoggedIn,
   upload.single("profilePic"),
@@ -50,13 +55,28 @@ router.get(
         console.log(err);
       });
   }
-);
+); */
 
-/* router.get("....", (req, res) => {
+router.get("/profile/:id", isLoggedIn, (req, res, next) => {
+  let userId = req.user._id;
+  console.log("USER ID: ", userId);
 
-  
-})
-*/
+  req.user._id;
+  console.log("esetse");
+  Image.find({ userId: userId })
+    .then((response) => {
+      //console.log(response);
+      //const data = response.filter((image) => image.userId == userId);
+      /*const data = response.map((image) => {
+        console.log(image.userId);
+        console.log(image.userId === userId);
+      });*/
+      res.json({ response });
+    })
+    .catch((e) => console.log(e));
+
+  //res.sendStatus(200);
+});
 
 /* GET home page */
 router.get("/", (req, res, next) => {

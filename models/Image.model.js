@@ -6,12 +6,7 @@ const ImageSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  tags: [
-    {
-      type: String,
-      default: "other",
-    },
-  ],
+  tag: String,
 
   url: String,
   description: { type: String, default: "There is no description." },
