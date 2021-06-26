@@ -5,6 +5,7 @@ const upload = require("../middleware/cloudinary");
 const Image = require("../models/Image.model");
 const isLoggedIn = require("../middleware/isLoggedIn");
 const mongoose = require("mongoose");
+const { findByIdAndUpdate } = require("../models/Image.model");
 
 router.post(
   "/uploadPicture",
@@ -13,14 +14,12 @@ router.post(
   (req, res) => {
     const imageUrl = req.file.path;
     const id = req.user._id;
-    const tag = req.body.tag;
-    const desc = req.body.description;
-    console.log(req);
+    //console.log("REQUEST BODY", req.body);
     Image.create({
       userId: id,
       url: imageUrl,
-      tag: tag,
-      description: desc,
+      tag: req.body.tag,
+      description: req.body.description,
     })
       .then((picture) => {
         console.log("newly created picture: ", picture);
